@@ -1,11 +1,13 @@
-﻿namespace Bookify.web.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace Bookify.web.Controllers
 {
-    public class CategoriesController : Controller
+    public class AuthorsController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public CategoriesController(ApplicationDbContext context, IMapper mapper)
+        public AuthorsController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -40,9 +42,9 @@
             _context.SaveChanges();
 
             var viewModel = _mapper.Map<CategoryVM>(category);
- 
 
-            return PartialView("_CategoryRow",viewModel);
+
+            return PartialView("_CategoryRow", viewModel);
         }
 
         [HttpGet]
@@ -56,7 +58,7 @@
 
             var model = _mapper.Map<CategoryFormVM>(category);
 
-            return PartialView("_Form",model);
+            return PartialView("_Form", model);
         }
 
         [HttpPost]
@@ -71,7 +73,7 @@
             if (category is null)
                 return NotFound();
 
-            category = _mapper.Map(model,category);
+            category = _mapper.Map(model, category);
             category.LastUpdatedDate = DateTime.Now;
 
             _context.Update(category);
@@ -79,7 +81,7 @@
 
             var viewModel = _mapper.Map<CategoryVM>(category);
 
-            return PartialView("_CategoryRow",viewModel);
+            return PartialView("_CategoryRow", viewModel);
         }
 
         [HttpPost]
@@ -107,6 +109,5 @@
 
             return Json(isAllow);
         }
-
     }
 }

@@ -1,19 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Bookify.web.Core.Models
+﻿namespace Bookify.web.Core.Models
 {
-    public class Category
+    [Index(nameof(Name),IsUnique =true)]
+    public class Category:BaseModel
     {
         public int Id { get; set; }
 
         [MaxLength(100)]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
-        public bool IsDeleted { get; set; }
-
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
-
-        public DateTime? LastUpdatedDate { get; set; }
+        public ICollection<BookCategory> Books { get; set; } = new List<BookCategory>();
 
     }
 }
